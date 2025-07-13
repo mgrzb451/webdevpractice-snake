@@ -1,0 +1,178 @@
+/* SETUP */
+*, *::after, ::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --color-orange: hsl(45, 99%, 51%);
+  --color-blue: hsl(202, 98%, 37%);
+  --color-blue-dark: hsl(202, 98%, 20%);
+  --color-grey-blue-light: hsl(202, 30%, 30%);
+  --color-grey-blue-dark: hsl(202, 30%, 10%);
+  --color-superfood: hsl(300, 65%, 50%);
+  --color-food: hsl(0, 60%, 55%);
+  --gameborad-size: 412px;
+  --cell-count: 30;
+  --gradient-orange-start: hsl(from var(--color-orange) h s 90%);
+  --gradient-orange-end: hsl(from var(--color-orange) h s 30%);
+  --gradient-orange: linear-gradient(to right,
+    var(--gradient-orange-start),
+    var(--color-orange),
+    var(--gradient-orange-end),
+    var(--gradient-orange-start));
+}
+
+body {
+  background-color: var(--color-grey-blue-dark);
+  font-family: consolas, monospace;
+  color: white;
+  min-width: 100vw;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+main {
+  background-color: var(--color-grey-blue-dark);
+  border: 2px solid var(--color-grey-blue-light);
+  width: var(--gameborad-size);
+  margin-block-start: 24px;
+  margin-inline: auto;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: repeat(2, min-content);
+}
+
+header {
+  grid-column: 1;
+  grid-row: 1;
+  height: max-content;
+  width: 100%;
+  border-bottom: 1px solid var(--color-grey-blue-light);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-inline: 16px;
+  padding-block: 16px;
+  font-size: 18px;
+}
+
+.start-screen {
+  width: var(--gameborad-size);
+  height: var(--gameborad-size);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  
+  .snake-logo {
+    height: 30%;
+    width: auto;
+  }
+
+  .difficulty-form {
+    width: min(calc(100% - 16px), 90%);
+  
+    .difficulty-form-container {
+      display: flex;
+      justify-content: space-between;
+      padding-inline: 16px;
+      padding-block: 8px;
+      font-size: 18px;
+  
+      legend {
+        font-size: 16px;
+        margin-inline: auto;
+      }  
+    }
+  }
+
+  .button-start {
+    font-size: 24px;
+    font-weight: 600;
+    background-color: var(--color-orange);
+    color: var(--color-blue-dark);
+    height: 48px;
+    padding-inline: 24px;
+    border: none;
+    border-radius: 100rem;
+    cursor: pointer;
+    transition: transform 200ms ease;
+
+    &:hover {
+      background: var(--gradient-orange);
+      background-size: 200% auto;
+      animation: animate-button-bg 1s linear infinite;
+      transform: scale(1.1);
+    }
+  }  
+}
+
+@keyframes animate-button-bg {
+  0% {
+    background-position: 200% center;
+  }
+  100% {
+    background-position: 0% center;
+  }
+}
+
+.start-screen.hidden {
+  display: none;
+  height: 0;
+}
+
+.gameboard {
+  padding: 4px;
+  grid-column: 1;
+  grid-row: 2;
+  width: var(--gameborad-size);
+  height: var(--gameborad-size);
+  display: grid;
+  grid-template-columns: repeat(var(--cell-count), 1fr);
+  grid-template-rows: repeat(var(--cell-count), 1fr);
+  overflow: hidden;
+  /* transition: all 5000ms ease 1000ms allow-discrete; */
+}
+
+@starting-style {
+  .gameboard {
+    height: 0;
+  }
+
+}
+.gameboard.hidden {
+  display: none;
+  /* Test if height:0 needs to be there */
+  height: 0;
+}
+
+.snake {
+  background-color: var(--color-orange);
+}
+.food {
+  background-color: var(--color-food);
+}
+.superfood {
+  background-color: var(--color-superfood);
+  animation: pulse 1000ms ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%{
+    filter: brightness(2);
+    transform: scale(1.15);
+  }
+  50%{
+    filter:brightness(.75);
+    transform: scale(.75);
+  }
+  100%{
+  filter:brightness(2);
+  transform: scale(1.15);
+  }
+}
+
+
